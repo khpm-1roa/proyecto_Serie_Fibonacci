@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Fibonacci </title>
+    
+</head>
+
+<body>
+    <div class="container" >
+        <h1>SERIE DE FIBONACCI PARES_IMPARES_MULTIPLOS </h1>
+        <form id="perro">
+            <label for="primer">Primero : </label>
+            <input type="number" name="primer" id="re_primer">
+            <br><br>
+            <label for="segundo">Segundo: </label>
+            <input type="number" name="segundo" id="re_segundo">
+            <br><br>
+            <label for="maximo">máximo : </label>
+            <input type="number" name="maximo" id="re_maximo">
+            <br><br>
+            <input type="button" value="Calcular serie" id="botonSolver"> <br><br>        
+            <input type="button" value="CalcularPares" id="botonesPares"> <br><br>           
+            <input type="button" value="CalcularImpares" id="botonesImpares"><br><br>
+            <br> <br>           
+            <label for="Multiplos">MULTIPLOS DE :</label>
+            <input type="text" name="multiplo" id="re_multiplos">
+             <input type="button" value="Calcular Multiplos" id="botonesMultiplos">
+            <br>
+        </form>
+    </div>
+
+    <br>
+    <input type="button" value="Ver Tabla" id="btnGenerar">
+    <HR>
+<hr>
+    <table id="tablaSerie"  border="4">
+        <tbody id="tbody">
+        </tbody>
+            <br>
+        <tbody id="tparesbody">
+        </tbody>
+            <br>
+        <tbody id="timpabody">
+
+        </tbody>
+            <br>
+        <tbody id="tMultibody">
+
+        </tbody>
+    </table>
+ 
+</body>
+<script>
+    //AUTOR:KEVIN PILLAJO
+   ///DESCIPCION:GENERAREMOS LA TABLA DE FIBONACCI CON PARES E IMPARES Y MULTIPLOS INGRESAMOS POR PANTALLA 
+    //clDECLARAMOS LA FUNCION PRINCIPAL LA CLASE SOLVER 
+    function Solver(primero, segundo, mmaximo) {
+        //TODO LO QUE SABE LA FUNCION SOLVER 
+        this.primero = primero;
+        this.segundo = segundo;
+        this.maximo = mmaximo;
+       //INGRESMAOS EL ARRAY DONDE SE ALMACENARA TODO 
+        this.serie = [];
+        //CREAMOS LA FUNCION GENERAR  Y GUARDAMOS PRIMERO Y SEGUNDO 
+        this.generar = generar;
+        function generar() {
+            this.serie.push(this.primero)
+            this.serie.push(this.segundo);
+        }
+    }
+    var numeros = [];
+    //geneerador fibonacci 
+    var generadorFibonacci = function(anterior, ultimo) {
+        if (anterior + ultimo > maximoValorSerie) {
+            return numeros;
+        } else {
+            nuevo = anterior + ultimo;
+            numeros.push(nuevo);
+            return generadorFibonacci(ultimo, nuevo);
+        }
+    }
+    //funvion del el boton solver 
+    document.getElementById("botonSolver")
+    .addEventListener("click",function() {
+            primerElemento = parseInt(document.getElementById("re_primer").value);
+            segundoElemento = parseInt(document.getElementById("re_segundo").value);
+            maximoValorSerie = parseInt(document.getElementById("re_maximo").value);
+            numeros.push(primerElemento);
+            numeros.push(segundoElemento);
+            generadorFibonacci(primerElemento, segundoElemento);
+        }
+    );
+
+           var indice=0;//genramos la tabla principal 
+           //llmamos a los t body previamene ingresamos 
+            var tabla = document.getElementById("tbody");
+            var tabla1 = document.getElementById("tparesbody");
+            var tabla2 = document.getElementById("timpabody");
+            var tabla3 = document.getElementById("tMultibody");
+            //botOn generar
+                            document.getElementById("btnGenerar")
+                            .addEventListener("click",function muestraDatos(){
+                                tabla1.style.display="none";
+                                tabla2.style.display="none";
+                                tabla3.style.display="none";
+                                tabla.style.display="block";
+                            if(indice===numeros.length-1){
+                                    return true;
+                            }else{
+    
+                                    var fila = document.createElement("tr");
+                                    var fila1 = document.createElement("tr");
+                                    var fila2 = document.createElement("tr");
+                                    var td = document.createElement("td");
+                                    var td1 = document.createElement("td")
+                                    var td2 = document.createElement("td")
+                                    td.appendChild(document.createTextNode(numeros[indice]));
+                                    td1.appendChild(document.createTextNode(numeros[indice+1]));
+                                    td2.appendChild(document.createTextNode(numeros[indice+2]));
+                                    
+                                                    fila.appendChild(td,);
+                                                    fila.appendChild(td1);
+                                                    fila.appendChild(td2);
+                                                    tabla.appendChild(fila);
+                                                    tabla.appendChild(fila1);
+                                                    tabla.appendChild(fila2);
+                                                    indice++;
+                                                    muestraDatos(indice);
+                                }
+                                        })
+
+     var indicep=0;
+    var tablap = document.getElementById("tparesbody");// generamos las tablas de los pares del t body
+document.getElementById("botonesPares")
+.addEventListener("click",function mostarPares(){
+    //hacemos visible  en invisible la tabla de los pares fente a ala de lso demas 
+    tabla.style.display="none";
+    tabla2.style.display="none";
+    tabla3.style.display="none";
+    tabla1.style.display="block";
+    //retornamos la tabla pares 
+    function esPares(item){
+    if(item%2===0){
+        return item;
+    }
+};
+                    var pares= numeros.filter(esPares);
+                    console.log(pares);
+                        if(indicep===pares.length){
+                    return true;
+                    }else{
+                    var fila = document.createElement("tr");
+                    var td = document.createElement("td");
+                    td.appendChild(document.createTextNode(pares[indicep]));
+                    fila.appendChild(td,);
+                    tablap.appendChild(fila);
+                    indicep++;
+                    mostarPares(indicep);
+                    }
+                    })
+
+var indiceim=0;//generar la tabla  de los impares 
+    var tablaim = document.getElementById("timpabody");
+    
+document.getElementById("botonesImpares")
+.addEventListener("click",function mostarPares(){
+    //mostramos la tabla de lso pares 
+    tabla1.style.display="none";
+    tabla.style.display="none";
+    tabla3.style.display="none";
+     tabla2.style.display="block";
+function esImpar(item){
+    if(item%2!=0){
+        return item;
+    }
+};
+                        var impares= numeros.filter(esImpar);
+                        console.log(impares);
+                            if(indiceim===impares.length){
+                        return true;
+                        }else{
+                        var fila = document.createElement("tr");
+                        var td = document.createElement("td");
+                        td.appendChild(document.createTextNode(impares[indiceim]));
+                        fila.appendChild(td,);
+                        tablaim.appendChild(fila);
+                        indiceim++;
+                        mostarPares(indiceim);
+                        }
+                        })
+
+var indiceMult=0;//generamos los multiplos en la tabla 
+    var tablaimul = document.getElementById("tMultibody");
+document.getElementById("botonesMultiplos")
+.addEventListener("click",function mostarPares(){
+    //mostramos la tabla 
+    tabla1.style.display="none";
+    tabla2.style.display="none";
+    tabla.style.display="none";
+     tabla3.style.display="block";
+    function esMultiplo(item){
+    if(item%document.getElementById("re_multiplos").value===0){
+        return item;
+    }
+};
+                var multi= numeros.filter(esMultiplo);
+                console.log(multi);
+                    if(indiceMult===multi.length){
+                return true;
+                }else{
+                var fila = document.createElement("tr");
+                var td = document.createElement("td");
+
+                td.appendChild(document.createTextNode(multi[indiceMult]));
+                fila.appendChild(td);
+                tablaimul.appendChild(fila);
+                indiceMult++;
+
+                mostarPares(indiceMult);
+                }
+                })
+</script>
+
+</html>
